@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html>
-  <script src="data.js"></script>
-
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.1.0/milligram.min.css">
@@ -49,6 +47,23 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 <div id="map" style="width:100%; height:100%;"></div>
 
 <script>
+
+function getQueryParams(qs) {
+    qs = qs.split('+').join(' ');
+
+    var params = {},
+        tokens,
+        re = /[?&]?([^=]+)=([^&]*)/g;
+
+    while (tokens = re.exec(qs)) {
+        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+    }
+
+    return params;
+}
+
+data = getQueryParams(document.location.search).data;
+
 var app = angular.module('myApp', []);
 
 bar_data = [];
@@ -124,8 +139,6 @@ app.controller('customersCtrl', function($scope, $http) {
   }
 
 });
-
-console.log("XXX:"+map_data.length)
 
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {

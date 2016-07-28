@@ -148,7 +148,7 @@ app.controller('customersCtrl', function($scope, $http) {
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 4,
-    center: {lat: data[0].lat, lng: data[0].lng}
+    center: {lat: 0, lng: 0}
   });
 
   $.each(data, function(i){

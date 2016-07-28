@@ -156,7 +156,7 @@ function drawDualX() {
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 4,
-    center: lat: map_data[0].lat, lng: map_data[0].lng
+    center: {lat: map_data[0].lat, lng: map_data[0].lng}
   });
 
   $.each(map_data, function(i){

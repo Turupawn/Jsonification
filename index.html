@@ -2,23 +2,16 @@
 <html>
   <script src="data.js"></script>
 
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.1.0/milligram.min.css">
+
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <meta charset="utf-8">
-  <title>Simple markers</title>
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-    #map {
-      height: 100%;
-    }
-  </style>
 <body>
 
 <div ng-app="myApp" ng-controller="customersCtrl">
@@ -38,12 +31,12 @@
   </tr>
 </table>
 
-
 <div ng-if="isChart == true" id="chart_div" style="width: 900px; height: 300px;"></div>
 
+<canvas id="canvas" width="1024" height="512" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
 
-
-    <div id="map"></div>
+    <div id="map" style="height: 100%"></div>
     <script>
 
       function initMap() {
@@ -75,10 +68,12 @@ var app = angular.module('myApp', []);
 
 bar_data = [];
 
+canvas_data = [];
+
 app.controller('customersCtrl', function($scope, $http) {
 
   $scope.isSequential=true;
-  $scope.isChart=false;
+  $scope.isChart=true;
 
   $scope.data = data;
   $scope.keys=[];
@@ -105,33 +100,26 @@ app.controller('customersCtrl', function($scope, $http) {
   //isChart
   var chart_keys=["name","value"]
 
-  if($scope.isSequential)
-  {
-    $scope.isChart=true;
-    $.each(chart_keys, function(i){
-      key_found=false
-      $.each($scope.keys, function(j){
-        if(chart_keys[i]==$scope.keys[j])
-          key_found=true
-      });
-      if(!key_found)
-      {
-        $scope.isChart=false;
-      }
-    });
+  bar_data = [ ['TODO1', 'TODO2', { role: 'style' }] ];
+  $.each(data, function(key, value){
+    if(value.name && value.value)
+      bar_data.push([value.name, value.value, '#b87333'])
+  })
 
-    if($scope.isChart)
-    {
+  //isCanvas
+  $.each(data, function(key, value){
+    if(value.text && value.x && value.y)
+      canvas_data.push([value.text, value.x, value.y])
+  })
 
-      bar_data = [
-           ['TODO1', 'TODO2', { role: 'style' }]
-        ];
+  var c = document.getElementById("canvas");
+  var ctx = c.getContext("2d");
+  ctx.font = "30px Roboto";
 
-      $.each(data, function(key, value){
-        bar_data.push([value.name, value.value, '#b87333'])
-      })
-    }
-  }
+  $.each(canvas_data, function(i){
+    ctx.fillText(canvas_data[i][0],canvas_data[i][1],canvas_data[i][2]);
+  })
+
 });
 
 </script>

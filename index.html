@@ -123,13 +123,7 @@ app.controller('customersCtrl', function($scope, $http) {
       canvas_data.push([value.text, value.x, value.y])
   })
 
-  var c = document.getElementById("canvas");
-  var ctx = c.getContext("2d");
-  ctx.font = "30px Roboto";
 
-  $.each(canvas_data, function(i){
-    ctx.fillText(canvas_data[i][0],canvas_data[i][1],canvas_data[i][2]);
-  })
 
 });
 

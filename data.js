@@ -1,4 +1,4 @@
-var data = [{a:10},{a:20},{a:30}];
+var data = [{lat:10,lng:10},{lat:10,lng:15},{lat:8,lng:4}];
 
 /*
 Special keys:

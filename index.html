@@ -73,11 +73,11 @@ function getQueryParams(qs) {
 
 data_param = getQueryParams(document.location.search).data;
 
-data = []
+//data = []
 
 if(data_param)
 {
-  data = JSON.parse('{"data":'+data_param+'}').data
+  //data = JSON.parse('{"data":'+data_param+'}').data
   $("#textarea").val(data_param);
 }
 

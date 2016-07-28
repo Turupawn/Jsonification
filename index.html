@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+  <script src="data.js"></script>
+
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="data.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <meta charset="utf-8">
@@ -37,6 +39,7 @@
 </table>
 
 
+<div ng-if="isChart == true" id="chart_div" style="width: 900px; height: 300px;"></div>
 
 
 
@@ -70,16 +73,23 @@
 <script>
 var app = angular.module('myApp', []);
 
+bar_data = [];
+
 app.controller('customersCtrl', function($scope, $http) {
 
   $scope.isSequential=true;
+  $scope.isChart=false;
 
   $scope.data = data;
   $scope.keys=[];
+
+  //Table keys
   $.each(data[0], function(key, value){
     $scope.keys.push(key);
   });
 
+
+  //isSequential
   $.each(data, function(key, value){
     current_keys=[];
     $.each(value, function(key, value){
@@ -90,7 +100,67 @@ app.controller('customersCtrl', function($scope, $http) {
       $scope.isSequential=false;
     }
   });
+
+
+  //isChart
+  var chart_keys=["name","value"]
+
+  if($scope.isSequential)
+  {
+    $scope.isChart=true;
+    $.each(chart_keys, function(i){
+      key_found=false
+      $.each($scope.keys, function(j){
+        if(chart_keys[i]==$scope.keys[j])
+          key_found=true
+      });
+      if(!key_found)
+      {
+        $scope.isChart=false;
+      }
+    });
+
+    if($scope.isChart)
+    {
+
+      bar_data = [
+           ['TODO1', 'TODO2', { role: 'style' }]
+        ];
+
+      $.each(data, function(key, value){
+        bar_data.push([value.name, value.value, '#b87333'])
+      })
+    }
+  }
 });
+
+</script>
+
+<script>
+
+google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawDualX);
+
+function drawDualX() {
+
+      var google_bar_data = google.visualization.arrayToDataTable(bar_data);
+
+      var options = {
+        chart: {
+          title: 'TODO3',
+          subtitle: 'TODO4'
+        },
+        hAxis: {
+          title: 'TODO5'
+        },
+        vAxis: {
+          title: 'TODO6'
+        },
+        bars: 'horizontal'
+      };
+      var material = new google.charts.Bar(document.getElementById('chart_div'));
+      material.draw(google_bar_data, options);
+    }
 </script>
 
 </body>

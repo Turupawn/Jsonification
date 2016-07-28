@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="data.js"></script>
+<body>
+
+<div ng-app="myApp" ng-controller="customersCtrl">
+
+<table ng-if="isSequential == true">
+  <tr>
+    <td ng-repeat="key in keys">{{ key }}</td>
+  </tr>
+  <tr ng-repeat="(key_row,data_row) in data">
+    <td ng-repeat="data_column in data_row">{{ data_column }}</td>
+  </tr>
+</table>
+
+<table ng-if="isSequential == false">
+  <tr ng-repeat="(key_row,data_row) in data">
+    <td ng-repeat="(key_column,data_column) in data_row">{{ key_column }}: {{ data_column }}</td>
+  </tr>
+</table>
+
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+
+app.controller('customersCtrl', function($scope, $http) {
+
+  $scope.isSequential=true;
+
+  $scope.data = data;
+  $scope.keys=[];
+  $.each(data[0], function(key, value){
+    $scope.keys.push(key);
+  });
+
+  $.each(data, function(key, value){
+    current_keys=[];
+    $.each(value, function(key, value){
+      current_keys.push(key);
+    });
+    if(JSON.stringify($scope.keys) != JSON.stringify(current_keys))
+    {
+      $scope.isSequential=false;
+    }
+  });
+});
+</script>
+
+</body>
+</html>

@@ -4,6 +4,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.1.0/milligram.min.css">
 
+  <script src="data.js"></script>
+
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -62,9 +64,10 @@ function getQueryParams(qs) {
     return params;
 }
 
-data = getQueryParams(document.location.search).data;
+//console.log(getQueryParams(document.location.search).data)
 
-console.log(data)
+//data = JSON.parse(getQueryParams(document.location.search).data);
+
 
 var app = angular.module('myApp', []);
 

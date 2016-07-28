@@ -13,7 +13,7 @@
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <meta charset="utf-8">
   <style>
-    html, body {
+    html, body, #main {
       height: 100%;
       margin: 0;
       padding: 0;
@@ -21,7 +21,7 @@
   </style>
 <body>
 
-<div ng-app="myApp" ng-controller="customersCtrl">
+<div id="main" ng-app="myApp" ng-controller="customersCtrl">
 
 <table ng-if="isSequential == true">
   <tr>
@@ -44,9 +44,9 @@
 <canvas ng-if="isCanvas == true" id="canvas" width="1024" height="512" style="border:1px solid #d3d3d3;">
 Your browser does not support the HTML5 canvas tag.</canvas>
 
-</div>
+<div  id="map" style="width:100%; height:100%;"></div>
 
-<div id="map" style="width:100%; height:100%;"></div>
+</div>
 
 <script>
 

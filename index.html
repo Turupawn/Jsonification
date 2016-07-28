@@ -29,7 +29,7 @@
 -->
 
 
-<canvas ng-if="isCanvas == true" id="canvas" width="1024" height="512" style="border:1px solid #d3d3d3;">
+<canvas ng-if="isCanvas == true" width="1" height="1" id="canvas" style="border:1px solid #d3d3d3;">
 Your browser does not support the HTML5 canvas tag.</canvas>
 
 <div id="main" ng-app="myApp" ng-controller="customersCtrl">
@@ -157,6 +157,9 @@ app.controller('customersCtrl', function($scope, $http) {
   if($scope.isCanvas)
   {
     var c = document.getElementById("canvas");
+    c.width = 1000
+    c.height = 500
+
     var ctx = c.getContext("2d");
     ctx.font = "30px Roboto";
 

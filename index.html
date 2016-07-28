@@ -26,6 +26,10 @@
   <input type="submit" /> 
 </form>
 
+
+<canvas ng-if="isCanvas == true" id="canvas" width="1024" height="512" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+
 <div id="main" ng-app="myApp" ng-controller="customersCtrl">
 
 <table ng-if="isSequentialTable == true">
@@ -48,9 +52,6 @@
 <div ng-if="isMap == true" id="map" style="width:100%; height:100%;"></div>
 
 </div>
-
-<canvas ng-if="isCanvas == true" id="canvas" width="1024" height="512" style="border:1px solid #d3d3d3;">
-Your browser does not support the HTML5 canvas tag.</canvas>
 
 <script>
 

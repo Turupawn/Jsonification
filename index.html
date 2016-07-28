@@ -94,12 +94,14 @@ app.controller('customersCtrl', function($scope, $http) {
 
   //isMap
   $.each(data, function(key, value){
+
     if(value.lat && value.lng)
       map_data.push([value.lat, value.lng])
   })
 
   if(map_data.length<=0)
     $scope.isMap=false;
+
 
   //isCanvas
   $.each(data, function(key, value){
@@ -122,6 +124,27 @@ app.controller('customersCtrl', function($scope, $http) {
   }
 
 });
+
+console.log("XXX:"+map_data.length)
+
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 4,
+    center: {lat: data[0].lat, lng: data[0].lng}
+  });
+
+  $.each(data, function(i){
+    if(data[i].lat && data[i].lng)
+    {
+      var marker = new google.maps.Marker({
+        position: {lat: data[i].lat, lng: data[i].lng},
+        map: map,
+        title: 'Hello World!'
+      });
+    }
+  })
+
+}
 
 </script>
 
@@ -150,23 +173,6 @@ function drawDualX() {
       var material = new google.charts.Bar(document.getElementById('chart_div'));
       material.draw(google_bar_data, options);
     }
-</script>
-
-<script>
-function initMap() {
-  var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 4,
-    center: {lat: map_data[0].lat, lng: map_data[0].lng}
-  });
-
-  $.each(map_data, function(i){
-    var marker = new google.maps.Marker({
-      position: {lat: map_data[i].lat, lng: map_data[i].lng},
-      map: map,
-      title: 'Hello World!'
-    });
-  })
-}
 </script>
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjWh-Ry4NVRvyIHvgJiUTbHbfTPMkaKNs&callback=initMap"></script>

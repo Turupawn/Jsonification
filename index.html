@@ -25,7 +25,7 @@
 
 <table ng-if="isSequential == true">
   <tr>
-    <td ng-repeat="key in keys">{{ key }}</td>
+    <th ng-repeat="key in keys">{{ key }}</th>
   </tr>
   <tr ng-repeat="(key_row,data_row) in data">
     <td ng-repeat="data_column in data_row">{{ data_column }}</td>
@@ -41,19 +41,19 @@
 <div ng-if="isChart == true" id="chart_div" style="width: 900px; height: 300px;"></div>
 
 
-<canvas id="canvas" width="1024" height="512" style="border:1px solid #d3d3d3;">
+<canvas ng-if="isCanvas == true" id="canvas" width="1024" height="512" style="border:1px solid #d3d3d3;">
 Your browser does not support the HTML5 canvas tag.</canvas>
+
+<div id="map" style="width:100%; height:100%;"></div>
 
 </div>
 
-
-    <div id="map" style="width:100%; height:100%;"></div>
     <script>
 
       function initMap() {
         var myLatLng = {lat: -25.363, lng: 131.044};
 
-        var map = new google.maps.Map(document.getElementById('map'), {
+        var map = new google.maps.Map(document.getElementById('#map'), {
           zoom: 4,
           center: myLatLng
         });
@@ -69,7 +69,6 @@ Your browser does not support the HTML5 canvas tag.</canvas>
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjWh-Ry4NVRvyIHvgJiUTbHbfTPMkaKNs&callback=initMap">
     </script>
 
-
 <script>
 var app = angular.module('myApp', []);
 
@@ -81,6 +80,7 @@ app.controller('customersCtrl', function($scope, $http) {
 
   $scope.isSequential=true;
   $scope.isChart=true;
+  $scope.isCanvas=true;
 
   $scope.data = data;
   $scope.keys=[];
@@ -89,7 +89,6 @@ app.controller('customersCtrl', function($scope, $http) {
   $.each(data[0], function(key, value){
     $scope.keys.push(key);
   });
-
 
   //isSequential
   $.each(data, function(key, value){
@@ -103,7 +102,6 @@ app.controller('customersCtrl', function($scope, $http) {
     }
   });
 
-
   //isChart
   var chart_keys=["name","value"]
 
@@ -113,20 +111,28 @@ app.controller('customersCtrl', function($scope, $http) {
       bar_data.push([value.name, value.value, '#b87333'])
   })
 
+  if(bar_data.length<=1)
+    $scope.isChart=false;
+
   //isCanvas
   $.each(data, function(key, value){
     if(value.text && value.x && value.y)
       canvas_data.push([value.text, value.x, value.y])
   })
 
+  if(canvas_data.length<=0)
+    $scope.isCanvas=false;
 
-  var c = document.getElementById("canvas");
-  var ctx = c.getContext("2d");
-  ctx.font = "30px Roboto";
+  if($scope.isCanvas)
+  {
+    var c = document.getElementById("canvas");
+    var ctx = c.getContext("2d");
+    ctx.font = "30px Roboto";
 
-  $.each(canvas_data, function(i){
-    ctx.fillText(canvas_data[i][0],canvas_data[i][1],canvas_data[i][2]);
-  })
+    $.each(canvas_data, function(i){
+      ctx.fillText(canvas_data[i][0],canvas_data[i][1],canvas_data[i][2]);
+    })
+  }
 
 });
 

@@ -48,39 +48,19 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 
 <div id="map" style="width:100%; height:100%;"></div>
 
-    <script>
-
-      function initMap() {
-        var myLatLng = {lat: -25.363, lng: 131.044};
-
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: myLatLng
-        });
-
-        var marker = new google.maps.Marker({
-          position: myLatLng,
-          map: map,
-          title: 'Hello World!'
-        });
-      }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjWh-Ry4NVRvyIHvgJiUTbHbfTPMkaKNs&callback=initMap">
-    </script>
-
 <script>
 var app = angular.module('myApp', []);
 
 bar_data = [];
-
 canvas_data = [];
+map_data = [];
 
 app.controller('customersCtrl', function($scope, $http) {
 
   $scope.isSequential=true;
   $scope.isChart=true;
   $scope.isCanvas=true;
+  $scope.isMap=true;
 
   $scope.data = data;
   $scope.keys=[];
@@ -103,8 +83,6 @@ app.controller('customersCtrl', function($scope, $http) {
   });
 
   //isChart
-  var chart_keys=["name","value"]
-
   bar_data = [ ['TODO1', 'TODO2', { role: 'style' }] ];
   $.each(data, function(key, value){
     if(value.name && value.value)
@@ -113,6 +91,15 @@ app.controller('customersCtrl', function($scope, $http) {
 
   if(bar_data.length<=1)
     $scope.isChart=false;
+
+  //isMap
+  $.each(data, function(key, value){
+    if(value.lat && value.lng)
+      map_data.push([value.lat, value.lng])
+  })
+
+  if(map_data.length<=0)
+    $scope.isMap=false;
 
   //isCanvas
   $.each(data, function(key, value){
@@ -164,6 +151,25 @@ function drawDualX() {
       material.draw(google_bar_data, options);
     }
 </script>
+
+<script>
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 4,
+    center: myLatLng
+  });
+
+  $.each(map_data, function(i){
+    var marker = new google.maps.Marker({
+      position: {lat: map_data[i].lat, lng: map_data[i].lng},
+      map: map,
+      title: 'Hello World!'
+    });
+  })
+}
+</script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjWh-Ry4NVRvyIHvgJiUTbHbfTPMkaKNs&callback=initMap"></script>
 
 </body>
 </html>

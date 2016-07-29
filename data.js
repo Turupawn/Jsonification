@@ -7,6 +7,10 @@ var data = [
 {text:"Prussa",x:500,y:300},
 {text:"Lulzbot",x:200,y:100},
 
+{lat:8,lng:4},
+{lat:11,lng:6},
+{lat:10,lng:7}
+
 ];
 
 /*

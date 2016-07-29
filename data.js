@@ -1,4 +1,10 @@
 var data = [
+{a:10},
+{b:20},
+{c:30},
+];
+
+/*
 {name:"Abs",color:"blue",value:10},
 {name:"Hips",color:"orange",value:11},
 {name:"Pla",color:"white",value:7},
@@ -10,7 +16,7 @@ var data = [
 {lat:8,lng:4},
 {lat:11,lng:6},
 {lat:10,lng:7}
-];
+*/
 
 /*
 Special keys:

@@ -1,7 +1,7 @@
 var data = [
-{a:10,b:20},
-{a:100,b:200},
-{a:1000,b:2000},
+{name:"Abs",color:"blue",value:10},
+{name:"Hips",color:"orange",value:11},
+{name:"Pla",color:"white",value:7},
 ];
 
 /*

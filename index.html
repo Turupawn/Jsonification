@@ -9,6 +9,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="http://rosalilastudio.com/js/arbor.js"></script>  
+  <script src="arbor_setup.js"></script>
 
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <meta charset="utf-8">
@@ -20,14 +22,12 @@
     }
   </style>
 <body>
-
 <!--
 <form action="https://turupawn.github.io/Jsonification/index.html" method="GET">
   <textarea name="data" id="textarea" cols="45" rows="5">[{"a":10},{"a":20},{"a":30}]</textarea>
   <input type="submit" /> 
 </form>
 -->
-
 
 <canvas ng-if="isCanvas == true" width="1" height="1" id="canvas" style="border:1px solid #d3d3d3;">
 Your browser does not support the HTML5 canvas tag.</canvas>
@@ -50,6 +50,10 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 </table>
 
 <div ng-if="isChart == true" id="chart_div" style="width: 900px; height: 300px;"></div>
+
+<div ng-if="isMindMap == true">
+  <canvas id="viewport" width="1200" height="1200"></canvas>
+</div>
 
 <div ng-if="isMap == true" id="map" style="width:100%; height:100%;"></div>
 
@@ -88,6 +92,7 @@ var app = angular.module('myApp', []);
 bar_data = [];
 canvas_data = [];
 map_data = [];
+mindmap_data = [];
 
 app.controller('customersCtrl', function($scope, $http) {
 
@@ -96,6 +101,7 @@ app.controller('customersCtrl', function($scope, $http) {
   $scope.isChart=true;
   $scope.isCanvas=true;
   $scope.isMap=true;
+  $scope.isMindMap=true;
 
   $scope.data = data;
   $scope.keys=[];
@@ -144,6 +150,18 @@ app.controller('customersCtrl', function($scope, $http) {
   if(map_data.length<=0)
     $scope.isMap=false;
 
+  //isMindMap
+  $.each(data, function(key, value){
+
+    if(value.name && value.color && value.mass && value.connections)
+      mindmap_data.push([value.name,value.color,value.mass,value.connections])
+  })
+
+  if(mindmap_data.length<=0)
+    $scope.isMindMap=false;
+
+  if($scope.isMindMap)
+    initMindMap(mindmap_data)
 
   //isCanvas
   $.each(data, function(key, value){
